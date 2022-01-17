@@ -1,18 +1,18 @@
 const express = require("express");
+const path = require("path");
+const dotenv = require("dotenv");
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-const books = [
-  { page: 123, name: "diyor" },
-  { page: 13, name: "Abjalilov" },
-  { page: 116, name: "abdi" },
-];
+// Env variables
+dotenv.config();
+
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", (req, res) => {
-  res.send("Hello");
+  res.sendFile("index.html");
 });
-app.get("/about", (req, res) => {
-  res.send(JSON.stringify(books));
-});
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server running on PORT: ${PORT}`);
