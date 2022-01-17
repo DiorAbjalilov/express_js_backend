@@ -15,7 +15,10 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("home", { hello: "hello express js", title: "home page" });
+});
+app.get("/about", (req, res) => {
+  res.render("about", { hello: "hello express js", title: "about page" });
 });
 
 const PORT = process.env.PORT || 3000;
