@@ -9,9 +9,14 @@ const postersRoutes = require("./routes/postersRoutes");
 dotenv.config();
 
 const app = express();
+// set static folder
+
+// Body parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, "public")));
-
+// Initialize template engine (handlebars)
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
