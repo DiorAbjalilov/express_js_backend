@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const { engine } = require("express-handlebars");
 const dotenv = require("dotenv");
+const homeRoutes = require("./routes/homeRoutes");
+const postersRoutes = require("./routes/postersRoutes");
 
 // Env variables
 dotenv.config();
@@ -14,12 +16,9 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
-app.get("/", (req, res) => {
-  res.render("home", { hello: "hello express js", title: "home page" });
-});
-app.get("/about", (req, res) => {
-  res.render("about", { hello: "hello express js", title: "about page" });
-});
+// Initialize routes
+app.use("/", homeRoutes);
+app.use("/posters", postersRoutes);
 
 const PORT = process.env.PORT || 3000;
 
