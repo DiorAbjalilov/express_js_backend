@@ -6,6 +6,7 @@ const {
   addNewPoster,
   getOnePoster,
   getEditPosterPage,
+  updatePoster,
 } = require("../controllers/posterControllers");
 
 // GET
@@ -15,5 +16,6 @@ router.get("/:id", getOnePoster);
 router.get("/:id/edit", getEditPosterPage);
 // POST
 router.post("/add", addNewPoster);
+router.post("/:id/edit", updatePoster);
 
 module.exports = router;

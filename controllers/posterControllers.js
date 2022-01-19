@@ -2,6 +2,7 @@ const {
   addNewPosterToDB,
   getAllPosters,
   getPosterById,
+  editPosterById,
 } = require("../db/poster");
 const { v4 } = require("uuid");
 
@@ -63,10 +64,36 @@ const addNewPoster = async (req, res) => {
 // @acsess      Private (Own)
 
 const getEditPosterPage = async (req, res) => {
-  res.render("posters/edit-poster", {
-    title: "Edit page",
-    url: process.env.URL,
-  });
+  try {
+    const poster = await getPosterById(req.params.id);
+    res.render("posters/edit-poster", {
+      title: "Edit page",
+      url: process.env.URL,
+      poster,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// @route       POST  /posters/:id/edit
+// @desc        POST posters by id
+// @acsess      Private (Own)
+
+const updatePoster = async (req, res) => {
+  try {
+    const editedPoster = {
+      title: req.body.title,
+      amount: req.body.amount,
+      region: req.body.region,
+      image: req.body.image,
+      description: req.body.description,
+    };
+    await editPosterById(req.params.id, editedPoster);
+    res.redirect("/posters");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = {
@@ -75,4 +102,5 @@ module.exports = {
   addNewPoster,
   getOnePoster,
   getEditPosterPage,
+  updatePoster,
 };

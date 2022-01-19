@@ -29,4 +29,29 @@ const getPosterById = (id) => {
   return poster;
 };
 
-module.exports = { addNewPosterToDB, getAllPosters, getPosterById };
+const editPosterById = (id, editedPoster) => {
+  const data = () => fs.readFileSync(path.join(__dirname, "db.json"), "utf8");
+  let posters = JSON.parse(data());
+  const index = posters.findIndex((p) => p.id === id);
+  posters[index] = {
+    id: posters[index].id,
+    title: editedPoster.title,
+    amount: editedPoster.amount,
+    image: editedPoster.image,
+    region: editedPoster.region,
+    description: editedPoster.description,
+  };
+  fs.writeFile(
+    path.join(__dirname, "db.json"),
+    JSON.stringify(posters),
+    "utf8"
+  );
+  console.log("data change");
+};
+
+module.exports = {
+  addNewPosterToDB,
+  getAllPosters,
+  getPosterById,
+  editPosterById,
+};
