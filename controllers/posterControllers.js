@@ -1,3 +1,4 @@
+const Poster = require("../models/posterModel");
 const {
   addNewPosterToDB,
   getAllPosters,
@@ -11,12 +12,16 @@ const { v4 } = require("uuid");
 // @desc        Get all posters
 // @acsess      Public
 const getPostersPage = async (req, res) => {
-  const posters = await getAllPosters();
-  res.render("posters/posters", {
-    title: "OLX - Posters page",
-    posters,
-    url: process.env.URL,
-  });
+  try {
+    const posters = await Poster.find().lean();
+    res.render("posters/posters", {
+      title: "OLX - Posters page",
+      posters: posters.reverse(),
+      url: process.env.URL,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // @route       GET  /posters/:id
@@ -48,16 +53,19 @@ const addNewPosterPage = (req, res) => {
 // @desc        Add new poster
 // @acsess      Private
 const addNewPoster = async (req, res) => {
-  const poster = {
-    id: v4(),
-    title: req.body.title,
-    amount: req.body.amount,
-    region: req.body.region,
-    image: req.body.image,
-    description: req.body.description,
-  };
-  await addNewPosterToDB(poster);
-  res.redirect("/");
+  try {
+    const poster = {
+      title: req.body.title,
+      amount: req.body.amount,
+      region: req.body.region,
+      image: req.body.image,
+      description: req.body.description,
+    };
+    await Poster.create(poster);
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // @route       GET  /posters/:id/edit
