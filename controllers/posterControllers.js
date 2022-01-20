@@ -3,6 +3,7 @@ const {
   getAllPosters,
   getPosterById,
   editPosterById,
+  deletePosterById,
 } = require("../db/poster");
 const { v4 } = require("uuid");
 
@@ -96,6 +97,19 @@ const updatePoster = async (req, res) => {
   }
 };
 
+// @route       GET  /posters/:id/delete
+// @desc        Get delete posters page
+// @acsess      Private (Own)
+
+const getDeletePoster = async (req, res) => {
+  try {
+    await deletePosterById(req.params.id);
+    res.redirect("/posters");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getPostersPage,
   addNewPosterPage,
@@ -103,4 +117,5 @@ module.exports = {
   getOnePoster,
   getEditPosterPage,
   updatePoster,
+  getDeletePoster,
 };

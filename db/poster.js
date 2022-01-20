@@ -41,7 +41,7 @@ const editPosterById = (id, editedPoster) => {
     region: editedPoster.region,
     description: editedPoster.description,
   };
-  fs.writeFile(
+  fs.writeFileSync(
     path.join(__dirname, "db.json"),
     JSON.stringify(posters),
     "utf8"
@@ -49,9 +49,22 @@ const editPosterById = (id, editedPoster) => {
   console.log("data change");
 };
 
+const deletePosterById = async (id) => {
+  const data = () => fs.readFileSync(path.join(__dirname, "db.json"), "utf8");
+  let posters = JSON.parse(data());
+  posters = posters.filter((p) => p.id !== id);
+  fs.writeFileSync(
+    path.join(__dirname, "db.json"),
+    JSON.stringify(posters),
+    "utf8"
+  );
+  console.log("delete");
+};
+
 module.exports = {
   addNewPosterToDB,
   getAllPosters,
   getPosterById,
   editPosterById,
+  deletePosterById,
 };

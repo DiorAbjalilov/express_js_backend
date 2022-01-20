@@ -7,6 +7,7 @@ const {
   getOnePoster,
   getEditPosterPage,
   updatePoster,
+  getDeletePoster,
 } = require("../controllers/posterControllers");
 
 // GET
@@ -17,5 +18,6 @@ router.get("/:id/edit", getEditPosterPage);
 // POST
 router.post("/add", addNewPoster);
 router.post("/:id/edit", updatePoster);
+router.post("/:id/delete", getDeletePoster);
 
 module.exports = router;
