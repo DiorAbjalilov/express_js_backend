@@ -23,7 +23,11 @@ const getPostersPage = async (req, res) => {
 // @acsess      Public
 const getOnePoster = async (req, res) => {
   try {
-    const poster = await Poster.findById(req.params.id).lean();
+    const poster = await Poster.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { visits: 1 } },
+      { new: true }
+    ).lean();
     res.render("posters/one", {
       title: poster.title,
       poster,

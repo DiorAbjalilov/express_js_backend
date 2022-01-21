@@ -27,6 +27,10 @@ const posterSchema = new Schema({
     required: true,
     default: true,
   },
+  visits: {
+    type: Number,
+    default: 1,
+  },
 });
 
 module.exports = model("Poster", posterSchema);
