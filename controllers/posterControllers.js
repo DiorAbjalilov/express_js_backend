@@ -48,7 +48,6 @@ const addNewPosterPage = (req, res) => {
 // @acsess      Private
 const addNewPoster = async (req, res) => {
   try {
-    console.log(req.file);
     const poster = {
       title: req.body.title,
       amount: req.body.amount,
