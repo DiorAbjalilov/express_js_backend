@@ -10,6 +10,7 @@ const getPostersPage = async (req, res) => {
     res.render("posters/posters", {
       title: "OLX - Posters page",
       posters: posters.reverse(),
+      user: req.session.user,
       url: process.env.URL,
     });
   } catch (err) {
@@ -30,6 +31,7 @@ const getOnePoster = async (req, res) => {
     res.render("posters/one", {
       title: poster.title,
       poster,
+      user: req.session.user,
       url: process.env.URL,
     });
   } catch (error) {
@@ -58,6 +60,7 @@ const addNewPoster = async (req, res) => {
       image: "uploads/" + req.file.filename,
       description: req.body.description,
     });
+    console.log(req.session.user._id, newPoster._id);
     await User.findByIdAndUpdate(
       req.session.user._id,
       {
@@ -65,7 +68,6 @@ const addNewPoster = async (req, res) => {
       },
       { new: true, upsert: true }
     );
-    console.log(newPoster._id);
     await newPoster.save((err, posterSaved) => {
       if (err) throw err;
       const posterId = posterSaved._id;
