@@ -63,7 +63,6 @@ const loginUser = async (req, res) => {
       if (matchPassword) {
         req.session.user = userExist;
         req.session.isLogged = true;
-        console.log(req.session.user);
         req.session.save((err) => {
           if (err) throw err;
           res.redirect("/profile/" + req.session.user.username);

@@ -1,6 +1,5 @@
 const Poster = require("../models/posterModel");
-
-const { v4 } = require("uuid");
+const User = require("../models/userModule");
 
 // @route       GET  /posters/add
 // @desc        Get all posters
@@ -52,15 +51,26 @@ const addNewPosterPage = (req, res) => {
 // @acsess      Private
 const addNewPoster = async (req, res) => {
   try {
-    const poster = {
+    const newPoster = new Poster({
       title: req.body.title,
       amount: req.body.amount,
       region: req.body.region,
       image: "uploads/" + req.file.filename,
       description: req.body.description,
-    };
-    await Poster.create(poster);
-    res.redirect("/");
+    });
+    await User.findByIdAndUpdate(
+      req.session.user._id,
+      {
+        $push: { posters: newPoster._id },
+      },
+      { new: true, upsert: true }
+    );
+    console.log(newPoster._id);
+    await newPoster.save((err, posterSaved) => {
+      if (err) throw err;
+      const posterId = posterSaved._id;
+      res.redirect("/posters/" + posterId);
+    });
   } catch (err) {
     console.log(err);
   }

@@ -22,6 +22,7 @@ const userSchema = new Schema(
       required: true,
       minlength: 6,
     },
+    postres: [{ type: Schema.Types.ObjectId, ref: "Poster" }],
   },
   {
     timestamps: true,

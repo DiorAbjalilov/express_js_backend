@@ -46,6 +46,7 @@ app.set("views", "./views");
 app.use("/", require("./routes/homeRoutes"));
 app.use("/posters", require("./routes/postersRoutes"));
 app.use("/auth", require("./routes/authRoutes"));
+app.use("/profile", require("./routes/profileRouters"));
 
 const PORT = process.env.PORT || 3000;
 
