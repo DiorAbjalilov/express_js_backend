@@ -1,23 +1,42 @@
 const express = require("express");
 const path = require("path");
 const { engine } = require("express-handlebars");
+const session = require("express-session");
+const MongoStore = require("connect-mongodb-session")(session);
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-
-// Connecting to database
-connectDB();
 
 // Env variables
 dotenv.config();
 
+// Connecting to database
+connectDB();
+
 const app = express();
-// set static folder
+
+// Initialize session store
+const store = new MongoStore({
+  uri: process.env.MONGO_URI,
+  collection: "sessions",
+});
 
 // Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Session configuration
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store,
+  })
+);
+
+// set static folder
 app.use(express.static(path.join(__dirname, "public")));
+
 // Initialize template engine (handlebars)
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");

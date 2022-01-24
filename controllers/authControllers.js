@@ -45,4 +45,32 @@ const registerNewUser = async (req, res) => {
   }
 };
 
-module.exports = { getLoginPage, getRegisterPage, registerNewUser };
+// @route       POST  /auth/login
+// @desc        Login user to website
+// @acsess      Public
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const userExist = await Users.findOne({ email });
+    if (userExist) {
+      const matchPassword = userExist.password === password;
+      if (matchPassword) {
+        req.session.user = userExist;
+        req.session.isLogged = true;
+        console.log(req.session.user);
+        req.session.save((err) => {
+          if (err) throw err;
+          res.redirect("/profile/" + req.session.user.username);
+        });
+      } else {
+        res.redirect("auth/login");
+      }
+    } else {
+      res.redirect("auth/login");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { getLoginPage, getRegisterPage, registerNewUser, loginUser };
