@@ -60,11 +60,10 @@ const addNewPoster = async (req, res) => {
       image: "uploads/" + req.file.filename,
       description: req.body.description,
     });
-    console.log(req.session.user._id, newPoster._id);
     await User.findByIdAndUpdate(
       req.session.user._id,
       {
-        $push: { posters: newPoster._id },
+        $push: { postres: newPoster._id },
       },
       { new: true, upsert: true }
     );

@@ -78,4 +78,19 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { getLoginPage, getRegisterPage, registerNewUser, loginUser };
+// @route       GET  /auth/logout
+// @desc        Logout user
+// @acsess      Private
+const logout = (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/");
+  });
+};
+
+module.exports = {
+  getLoginPage,
+  getRegisterPage,
+  registerNewUser,
+  loginUser,
+  logout,
+};

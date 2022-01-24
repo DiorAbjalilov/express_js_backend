@@ -5,11 +5,13 @@ const {
   getRegisterPage,
   registerNewUser,
   loginUser,
+  logout,
 } = require("../controllers/authControllers");
 
 // GET
 router.get("/login", getLoginPage);
 router.get("/signup", getRegisterPage);
+router.get("/logout", logout);
 
 // POST
 router.post("/signup", registerNewUser);
