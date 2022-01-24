@@ -5,20 +5,24 @@ const Users = require("../models/userModule");
 // @desc        Get login page
 // @acsess      Public
 const getLoginPage = (req, res) => {
-  res.render("auth/login", {
-    title: "Login",
-    url: process.env.URL,
-  });
+  if (!req.session.isLogged) {
+    res.render("auth/login", {
+      title: "Login",
+      url: process.env.URL,
+    });
+  }
 };
 
 // @route       GET  /auth/signup
 // @desc        Get register page
 // @acsess      Public
 const getRegisterPage = (req, res) => {
-  res.render("auth/signup", {
-    title: "Registratsiya",
-    url: process.env.URL,
-  });
+  if (!req.session.isLogged) {
+    res.render("auth/signup", {
+      title: "Registratsiya",
+      url: process.env.URL,
+    });
+  }
 };
 
 // @route       POST  /auth/signup
