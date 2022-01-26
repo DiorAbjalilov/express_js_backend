@@ -44,6 +44,7 @@ const getOnePoster = async (req, res) => {
 const addNewPosterPage = (req, res) => {
   res.render("posters/add-poster.handlebars", {
     title: "OLX - Add New Poster page",
+    user: req.session.user,
     url: process.env.URL,
   });
 };

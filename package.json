@@ -25,6 +25,7 @@
   "homepage": "https://github.com/DiorAbjalilov/express_js_backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^3.1.1",
     "dotenv": "^14.1.0",
     "express": "^4.17.2",

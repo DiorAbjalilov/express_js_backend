@@ -9,6 +9,7 @@ const getLoginPage = (req, res) => {
     res.render("auth/login", {
       title: "Login",
       url: process.env.URL,
+      loginError: req.flash("loginError"),
     });
   }
 };
@@ -21,6 +22,7 @@ const getRegisterPage = (req, res) => {
     res.render("auth/signup", {
       title: "Registratsiya",
       url: process.env.URL,
+      regError: req.flash("regError"),
     });
   }
 };
@@ -35,9 +37,11 @@ const registerNewUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     const userExist = await Users.findOne({ email });
     if (userExist) {
+      req.flash("regError", "Bunday foydalanuvchi mavjud");
       return res.redirect("/auth/signup");
     }
     if (password !== password2) {
+      req.flash("regError", "Parrollar mos tushmadi");
       return res.redirect("/auth/signup");
     }
     await Users.create({
@@ -72,9 +76,11 @@ const loginUser = async (req, res) => {
           res.redirect("/profile/" + req.session.user.username);
         });
       } else {
+        req.flash("loginError", "Noto`g`ri malumot kiritildi");
         res.redirect("auth/login");
       }
     } else {
+      req.flash("loginError", "Bunday foydalanuvchi mavjud emas");
       res.redirect("auth/login");
     }
   } catch (err) {

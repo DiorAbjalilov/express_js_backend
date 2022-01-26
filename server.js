@@ -3,6 +3,7 @@ const path = require("path");
 const { engine } = require("express-handlebars");
 const session = require("express-session");
 const MongoStore = require("connect-mongodb-session")(session);
+const flash = require("connect-flash");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 
@@ -33,6 +34,8 @@ app.use(
     store,
   })
 );
+
+app.use(flash());
 
 // set static folder
 app.use(express.static(path.join(__dirname, "public")));
