@@ -27,10 +27,14 @@ const getOnePoster = async (req, res) => {
       req.params.id,
       { $inc: { visits: 1 } },
       { new: true }
-    ).lean();
+    )
+      .populate("author")
+      .lean();
     res.render("posters/one", {
       title: poster.title,
       poster,
+      author: poster.author,
+      mypostres: req.session.user.username,
       user: req.session.user,
       url: process.env.URL,
     });
@@ -42,7 +46,7 @@ const getOnePoster = async (req, res) => {
 // @desc        Get adding posters
 // @acsess      Private
 const addNewPosterPage = (req, res) => {
-  res.render("posters/add-poster.handlebars", {
+  res.render("posters/add-poster", {
     title: "OLX - Add New Poster page",
     user: req.session.user,
     url: process.env.URL,
@@ -60,6 +64,7 @@ const addNewPoster = async (req, res) => {
       region: req.body.region,
       image: "uploads/" + req.file.filename,
       description: req.body.description,
+      author: req.session.user._id,
     });
     await User.findByIdAndUpdate(
       req.session.user._id,

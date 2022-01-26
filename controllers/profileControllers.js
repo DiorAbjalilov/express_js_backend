@@ -10,9 +10,13 @@ const getProfilePage = async (req, res) => {
       .populate("postres")
       .lean();
     if (!user) throw new Error("Bunday faydalanuvchi mavjud emas");
+
+    const isMe = user._id == req.session.user._id.toString();
     res.render("user/profile", {
       title: `${user.username}`,
       user,
+      isMe,
+      mypostres: req.session.user.username,
       postres: user.postres,
       isAuth: req.session.isLogged,
       url: process.env.URL,

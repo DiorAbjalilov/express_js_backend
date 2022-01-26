@@ -31,6 +31,10 @@ const posterSchema = new Schema({
     type: Number,
     default: 1,
   },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 module.exports = model("Poster", posterSchema);
