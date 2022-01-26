@@ -77,11 +77,11 @@ const loginUser = async (req, res) => {
         });
       } else {
         req.flash("loginError", "Noto`g`ri malumot kiritildi");
-        res.redirect("auth/login");
+        res.redirect("/auth/login");
       }
     } else {
       req.flash("loginError", "Bunday foydalanuvchi mavjud emas");
-      res.redirect("auth/login");
+      res.redirect("/auth/login");
     }
   } catch (err) {
     console.log(err);
