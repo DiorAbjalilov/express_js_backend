@@ -1,10 +1,12 @@
 const express = require("express");
 const path = require("path");
 const { engine } = require("express-handlebars");
+const Handlebars = require("handlebars");
 const session = require("express-session");
 const MongoStore = require("connect-mongodb-session")(session);
 const flash = require("connect-flash");
 const dotenv = require("dotenv");
+const helpers = require("./utils/hbsHelpers");
 const connectDB = require("./config/db");
 
 // Env variables
@@ -24,6 +26,9 @@ const store = new MongoStore({
 // Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Register handlebars helpers
+helpers(Handlebars);
 
 // Session configuration
 app.use(

@@ -9,6 +9,7 @@ const getPostersPage = async (req, res) => {
     const posters = await Poster.find().lean();
     res.render("posters/posters", {
       title: "OLX - Posters page",
+      mypostres: req.session.user.username,
       posters: posters.reverse(),
       user: req.session.user,
       url: process.env.URL,
