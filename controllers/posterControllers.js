@@ -6,6 +6,20 @@ const User = require("../models/userModule");
 // @acsess      Public
 const getPostersPage = async (req, res) => {
   try {
+    if (req.query.search) {
+      const { search } = req.query;
+      const posters = await Poster.searchPartial(search, (err, data) => {
+        if (err) throw new Error();
+      }).lean();
+      return res.status(200).render("posters/searchResults", {
+        title: "Search results page",
+        posters: posters.reverse(),
+        user: req.session.user,
+        querySearch: req.query.search,
+        url: process.env.URL,
+      });
+    }
+
     const posters = await Poster.find().lean();
     res.render("posters/posters", {
       title: "OLX - Posters page",

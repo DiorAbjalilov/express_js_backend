@@ -37,4 +37,33 @@ const posterSchema = new Schema({
   },
 });
 
+// Creating indexes
+posterSchema.index({
+  title: "text",
+  description: "text",
+});
+
+posterSchema.statics = {
+  searchPartial: function (q, callback) {
+    return this.find(
+      {
+        $or: [
+          { title: new RegExp(q, "gi") },
+          { description: new RegExp(q, "gi") },
+        ],
+      },
+      callback
+    );
+  },
+
+  searchFull: function (q, callback) {
+    return this.find(
+      {
+        $text: { $search: q, $caseSensitive: false },
+      },
+      callback
+    );
+  },
+};
+
 module.exports = model("Poster", posterSchema);
