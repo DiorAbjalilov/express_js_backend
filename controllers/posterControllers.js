@@ -1,5 +1,6 @@
 const Poster = require("../models/posterModel");
 const User = require("../models/userModule");
+const filtering = require("../utils/filtering");
 
 // @route       GET  /posters/add
 // @desc        Get all posters
@@ -20,10 +21,23 @@ const getPostersPage = async (req, res) => {
       });
     }
 
+    if (req.query) {
+      const { category, from, to, region } = req.query;
+      const filterings = filtering(category, from, to, region);
+      const posters = await Poster.find(filterings).lean();
+      return res.render("posters/searchResults", {
+        title: "Filter results page",
+        posters: posters.reverse(),
+        user: req.session.user,
+        querySearch: req.query.search,
+        url: process.env.URL,
+      });
+    }
+
     const posters = await Poster.find().lean();
-    res.render("posters/posters", {
+    return res.render("posters/posters", {
       title: "OLX - Posters page",
-      mypostres: req.session.user.username,
+      // mypostres: req.session.user.username,
       posters: posters.reverse(),
       user: req.session.user,
       url: process.env.URL,
@@ -45,7 +59,7 @@ const getOnePoster = async (req, res) => {
     )
       .populate("author")
       .lean();
-    res.render("posters/one", {
+    return res.render("posters/one", {
       title: poster.title,
       poster,
       author: poster.author,
@@ -60,7 +74,7 @@ const getOnePoster = async (req, res) => {
 // @desc        Get adding posters
 // @acsess      Private
 const addNewPosterPage = (req, res) => {
-  res.render("posters/add-poster", {
+  return res.render("posters/add-poster", {
     title: "OLX - Add New Poster page",
     user: req.session.user,
     url: process.env.URL,
