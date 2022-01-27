@@ -49,7 +49,6 @@ const getOnePoster = async (req, res) => {
       title: poster.title,
       poster,
       author: poster.author,
-      mypostres: req.session.user.username,
       user: req.session.user,
       url: process.env.URL,
     });

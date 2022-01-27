@@ -11,7 +11,12 @@ const getProfilePage = async (req, res) => {
       .lean();
     if (!userProfile) throw new Error("Bunday faydalanuvchi mavjud emas");
 
-    const isMe = userProfile._id == req.session.user._id.toString();
+    let isMe = false;
+
+    if (req.session.user) {
+      isMe = userProfile._id == req.session.user._id.toString();
+    }
+
     res.render("user/profile", {
       title: `${userProfile.username}`,
       user: req.session.user,
