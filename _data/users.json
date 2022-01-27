@@ -4,7 +4,7 @@
   "username": "user",
   "phone": "+99854654654",
   "password": "1234567",
-  "posters": [
+  "postres": [
     "6115004007cce52080948264",
     "611503024970cf20a05132c7",
     "61176bd0b7214f2e1ce6332a"
@@ -12,7 +12,7 @@
 },
 {
   "_id": "61176d4d5f9e952d1c61c6ff",
-  "posters": [
+  "postres": [
        "6118fc286ab4150cbc55655b",
        "6118fc8b6ab4150cbc556560",
        "6118fccd6ab4150cbc556566",
@@ -27,7 +27,7 @@
 },
 {
   "_id": "6118fe536ab4150cbc556593",
-  "posters": [
+  "postres": [
        "6118fe9b6ab4150cbc556597",
        "6118ff096ab4150cbc55659c",
        "6118ff506ab4150cbc5565a1",

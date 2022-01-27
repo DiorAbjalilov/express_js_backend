@@ -38,7 +38,18 @@ const importData = async () => {
 
 const deleteData = async () => {
   try {
+    await User.deleteMany();
+    await Poster.deleteMany();
+
+    console.log("Data Deleted");
+    process.exit();
   } catch (err) {
     console.log(err);
   }
 };
+
+if (process.argv[2] === "-i") {
+  importData();
+} else if (process.argv[2] === "-d") {
+  deleteData();
+}
