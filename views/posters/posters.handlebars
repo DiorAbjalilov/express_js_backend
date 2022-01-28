@@ -101,7 +101,7 @@
                                   </a></div>
                                   <h5 class="title-item-two">{{amount}} SO'M</h5>
                                 </div>
-                                <div><p class="card-text"><small class="text-muted">{{region}} viloyati - 11.07.2021 16:45</small></p></div>
+                                <div><p class="card-text"><small class="text-muted">{{region}} viloyati - {{formatDate createdAt}}</small></p></div>
                               </div>
                             </div>
                           </div>
@@ -113,7 +113,7 @@
 
                     
                     <nav aria-label="Page navigation example">
-                      <ul class="pagination pagination-lg justify-content-center">
+                      {{!-- <ul class="pagination pagination-lg justify-content-center">
                         <li class="page-item disabled">
                           <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                         </li>
@@ -123,7 +123,20 @@
                         <li class="page-item">
                           <a class="page-link" href="#">Next</a>
                         </li>
-                      </ul>
+                      </ul> --}}
+
+                        <ul class="pagination pagination-lg justify-content-center">
+                          {{#paginate pagination type="previous"}}
+                            <li {{#if disabled}}class="page-item disabled"{{/if}}><a href="?page={{n}}&limit=10" class="page-link" >Prev</a></li>
+                          {{/paginate}}
+                          {{#paginate pagination type="middle" }}
+                            <li {{#if active}}class="page-item active"{{/if}}><a href="?page={{n}}&limit=10" class="page-link" >{{n}}</a></li>
+                          {{/paginate}}
+                          {{#paginate pagination type="next"}}
+                            <li {{#if disabled}}class="page-item disabled"{{/if}}><a href="?page={{n}}&limit=10" class="page-link" >Next</a></li>
+                          {{/paginate}}
+                        </ul>
+
                     </nav>
                   </div>
               </div>

@@ -1,46 +1,51 @@
 const { Schema, model } = require("mongoose");
 
-const posterSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
+const posterSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    region: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+      min: 50,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    isActive: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
+    visits: {
+      type: Number,
+      default: 1,
+    },
+    category: {
+      type: String,
+      required: true,
+      enum: ["realty", "transport", "electronics", "jobs"],
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
-  amount: {
-    type: Number,
-    required: true,
-  },
-  region: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-    min: 50,
-  },
-  image: {
-    type: String,
-    required: true,
-  },
-  isActive: {
-    type: Boolean,
-    required: true,
-    default: true,
-  },
-  visits: {
-    type: Number,
-    default: 1,
-  },
-  category: {
-    type: String,
-    required: true,
-    enum: ["realty", "transport", "electronics", "jobs"],
-  },
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // Creating indexes
 posterSchema.index({
