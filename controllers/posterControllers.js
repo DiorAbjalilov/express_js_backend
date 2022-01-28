@@ -107,6 +107,7 @@ const addNewPoster = async (req, res) => {
       title: req.body.title,
       amount: req.body.amount,
       region: req.body.region,
+      category: req.body.category,
       image: "uploads/" + req.file.filename,
       description: req.body.description,
       author: req.session.user._id,
@@ -155,6 +156,7 @@ const updatePoster = async (req, res) => {
       title: req.body.title,
       amount: req.body.amount,
       region: req.body.region,
+      category: req.body.category,
       image: req.body.image,
       description: req.body.description,
     };
