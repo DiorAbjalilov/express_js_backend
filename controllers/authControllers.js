@@ -33,6 +33,8 @@ const getRegisterPage = (req, res) => {
 const registerNewUser = async (req, res) => {
   try {
     const { email, username, phone, password, password2 } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const userExist = await Users.findOne({ email });
     if (userExist) {
       req.flash("regError", "Bunday foydalanuvchi mavjud");
