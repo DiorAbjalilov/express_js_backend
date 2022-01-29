@@ -25,6 +25,7 @@
   "homepage": "https://github.com/DiorAbjalilov/express_js_backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^3.1.1",
     "dotenv": "^14.1.0",
@@ -33,6 +34,7 @@
     "express-session": "^1.17.2",
     "handlebars": "^4.7.7",
     "handlebars-paginate": "^0.1.0",
+    "helmet": "^5.0.2",
     "moment": "^2.29.1",
     "mongoose": "^5.13.5",
     "multer": "^1.4.4",
